@@ -97,28 +97,23 @@ you’re doing more than one thing.
 3. Оберните все примитивные типы
 ----------
 
-Следовать этому правилу довольно легко, вы просто должны инкапсулировать все примитивы в объекты, чтобы избежать анти-паттерна одержимости примитивами.
+Следовать этому правилу довольно легко, вы просто должны инкапсулировать все примитивы в объекты. Это избежать анти-паттерна одержимости примитивами, когда даже для сложных сущностей используються примитивы.
+
+Это повышает предсказуемость, когда у вас метод принимает строку, или целое число, то название метода должно раскрывать что же вы туда передаете. Когда же у вас метод принимает объекст класса деньги, или часы. 
+
+Большая часть этих правил направленна на то, что лучше сделать небольшой класс, чем выносить его функции по разным классам.
+ Это особенно актульано для таких объекто как деньги, часыы.
+
+Денег, времени, температуры. 
+
+
+Пример 1
 
 Внесу замечании в ПХП, в предыдущих версияъ версиях была 
 Правка под ПХП.
 
+Если у переменной вашего примитивного типа есть поведение, вы должны его инкапсулировать. И особенно это справедливо для Проблемно-ориентированного проектирование. 
 
-
-Если у переменной вашего примитивного типа есть поведение, вы должны его инкапсулировать. И особенно это справедливо для Проблемно-ориентированного проектирование (Domain Driven Design). DDD описывает Объекты Значений (Value Objects), например: Деньги, Часы. 
-
- When a method takes an int as a parameter, the method name
-needs to do all of the work of expressing the intent. If the same method takes an Hour as a
-parameter, it’s much easier to see what’s going on
-
-Small objects like Hour or Money also give us an obvious place to put behavior that would
-otherwise have been littered around other classes. This becomes especially true when you apply
-the
-Rule 9
-, and
-only
-the small object can access the value. 
-
-Пример 1
 
 4. Коллекции первого класса
 ----------
@@ -129,18 +124,15 @@ the small object can access the value.
 
 ТОДО: пример из монолога
 
+
 5. Одна точка на строку
 ----------
 
 Точка — это та, которую вы используете для вызова методов в Java или C#. В PHP — это будет стрелка.
 
-В основном это правило гласит, что вы не должны вызывать методы по цепочке. Однако, это не касается Текучего интерфейса (Fluent Interfaces), и в общем всего, что реализует паттерн цепочки методов (например, построитель запросов).
-
-Для других классов вы должны придерживаться этого правила. Это прямое следствие закона Деметры, который предписывает обращаться только к непосредственным друзьям и не обращаться к незнакомцам:
+В основном это правило гласит, что вы не должны вызывать методы по цепочке. 
 
 The LawOfDemeter specifies a style guideline: "Only talk to your immediate friends." E.g. one never calls a method on an object you got from another call nor on a global object. This helps a lot later when you ReFactor the code.
-
-http://www.ccs.neu.edu/research/demeter/papers/law-of-demeter/oopsla88-law-of-demeter.pdf
 
 PeterVanRooijen posted the following description of the LawOfDemeter to Usenet:
 
@@ -148,6 +140,14 @@ PeterVanRooijen posted the following description of the LawOfDemeter to Usenet:
     You can play with your own toys (but you can't take them apart),
     You can play with toys that were given to you.
     And you can play with toys you've made yourself. 
+
+Однако, это не касается Текучего интерфейса (Fluent Interfaces), и в общем всего, что реализует паттерн цепочки методов (например, построитель запросов).
+
+Для других классов вы должны придерживаться этого правила. Это прямое следствие закона Деметры, который предписывает обращаться только к непосредственным друзьям и не обращаться к незнакомцам:
+
+Минусы:
+
+
 
 6. Не используйте сокращения
 ----------
@@ -165,6 +165,7 @@ PeterVanRooijen posted the following description of the LawOfDemeter to Usenet:
 
 7. Сохраняйте сущности короткими
 ----------
+
 Класс не больше 50 строк и пакет не больше 10 файлов. Хорошо, это зависит от вас, но я думаю, вы можете увеличить это число с 50 до 150.
 
 Идея этого правила, что длинные файлы сложнее читать, сложнее понимать и сложнее поддерживать.
