@@ -1,6 +1,10 @@
-// 140 слов в минуту
-// 30 мин - 4200 слов
-// 175 слов на слайд
+<!--
+
+140 слов в минуту
+30 мин - 4200 слов
+175 слов на слайд
+
+-->
 
 О презентации и докладчике
 ----------
@@ -11,48 +15,206 @@
 ----------
 Объектная гимнастика была придумала для явы, но подойдет и для других
 
+Объектная гимнастика (англ. Object Calisthenics) — это упражнения в программировании, которые состоят из 9 правил, которые Джефф Бей описал в своей книге «The ThoughWorks Anthology». Пытаясь как можно точней следовать этим правилам, вы измените свои привычки написания кода. Это не значит, что вы должны постоянно соблюдать все эти правила. Найдите баланс и используйте только те, которые вам удобны.
+
+We’ve all seen poorly written code that’s hard to understand, test, and maintain. Object-oriented
+programming promised to save us from our old procedural code, allowing us to write software
+incrementally, reusing as we go along. But sometimes it seems like we’re just chasing down the
+same old complex, coupled designs in Java that we had in C. 
 
 Объектная гимнастика — это упражнения, я не правила
 ----------
 
-Можно сравнить с жонглоированием. Само по себе и жонглирование и объектная гимнастика 
+Только один уровень отступа в методе
+Не используйте else
+Оберните все примитивные типы
+Коллекции первого класса
+Одна точка на строку
+Не используйте сокращения
+Сохраняйте сущности короткими
+Никаких классов с более чем 2 атрибутами
+Никаких геттеров, сеттеров и свойств
+
+Объектная гимнастика — это упражнения, я не правила
+----------
+
+Можно сравнить с жонглоированием. Само по себе и жонглирование и объектная гимнастика  it is a tangible result, and this helped me focus for longer periods of time, and allowed me to focus on one single task until it was finished.”
+Juggling helps your eye/hand coordination… DUH! You don’t just get juggly, you have better coordination for life. Think of all the situations where balls are flying at your face ( sports, Christmas tree accidents, etc. ).
+
 выглядят не совсем надо, только их использование в одном случае
 помогает вам писать более читаемый и тестируемый код
+
 
 
 1. Только один уровень отступа в методе
 ----------
 
+Начнем с первого правила. Не использовать больше огдного уровня отступа в методе. Много уровней отступа в вашем коде ухудшают читаемость и поддерживоемость. 
+
+Цикломатическая сложность части программного кода — число независимых маршрутов через программный код. Большую часть времени вы не можете понять код, не компилируя его в своей голове, особенно, если у вас есть условия на разных уровнях или цикл внутри цикла.
+
+
+As you work with methods that do exactly one thing, expressed within classes doing exactly one thing, your code begins to change.
+
+Ever stare at a big old method wondering where to start? A giant method lacks cohesiveness.
+One guideline is to limit method length to 5 lines, but that kind of transition can be daunting if
+your code is littered with 500-line monsters. Instead, try to ensure that each method does exactly
+one thing – one control structure, or one block of statements, per method. If you’ve got nested
+control structures in a method, you’re working at multiple levels of abstraction, and that means
+you’re doing more than one thing. 
+
+У вас не будет меньше строк, но вы существенно улучшите их читаемость:
+
+Чтобы следовать этому правилу вы должны разделить ваши методы. Мартин Фаулер в книге «Рефакторинг», приводит паттерн выделение метода (Extract Method), который как раз то, что вам надо сделать.
+
 
 2. Не используйте else
 ----------
 
+Я думаю все в зале использовли ключевое слово Else, так как конструкция if/else есть почти во всех языках программирования.
+
+Вы помните, когда вы в последний раз встречали вложенные условия? Я так не думаю, Вам понравилось их читать?  и считаю это как раз то, чего надо избегать. 
+
+Обыно причиниой вложенных условия -  добавить еще одну ветку вместо рефакторинга — что зачастую в конце у вас оказывается действительно плохой код.
+
+Пример 1
+
+Допусти это прметный метод сохранения каких нибудь дданных из формы. если отбросить, то у него две проверки и сохранение, при чем вы можете обратить внимание что сохранение происходит в средите методоа
+
+Без елсе метод стал болле предстказуемымы и читаемым.
+
+Условие может быть оптимистическим — когда у вас есть условия ошибок и остаток метода придерживается сценария по умолчанию.
+
+принять защитный подход  — когда вы помещаете сценарий по умолчанию в условие, и если оно не выполняется, тогда вы возвращаете статус ошибки. Этот вариант лучше, так как он защищает от потенциальных проблем, о которых вы не подумали.
+
+
+Пример 2
+
+
+Просто способ убрать else — это положиться на ранний возврат (early return).
+
+
 3. Оберните все примитивные типы
 ----------
 
+Следовать этому правилу довольно легко, вы просто должны инкапсулировать все примитивы в объекты, чтобы избежать анти-паттерна одержимости примитивами.
+
+Внесу замечании в ПХП, в предыдущих версияъ версиях была 
+Правка под ПХП.
+
+
+
+Если у переменной вашего примитивного типа есть поведение, вы должны его инкапсулировать. И особенно это справедливо для Проблемно-ориентированного проектирование (Domain Driven Design). DDD описывает Объекты Значений (Value Objects), например: Деньги, Часы. 
+
+ When a method takes an int as a parameter, the method name
+needs to do all of the work of expressing the intent. If the same method takes an Hour as a
+parameter, it’s much easier to see what’s going on
+
+Small objects like Hour or Money also give us an obvious place to put behavior that would
+otherwise have been littered around other classes. This becomes especially true when you apply
+the
+Rule 9
+, and
+only
+the small object can access the value. 
+
+Пример 1
 
 4. Коллекции первого класса
 ----------
 
+Любой класс, который содержит коллекцию, не должен содержать другие атрибуты. Если у вас есть набор элементов, и вы хотите манипулировать ими, создайте класс, который специально предназначен для этого набора.
+
+Каждая коллекция оборачивается в свой собственный класс, так что поведения, относящиеся к коллекции, теперь имеют свое место (например, методы отбора, применения правила к каждому элементу).
+
+ТОДО: пример из монолога
 
 5. Одна точка на строку
 ----------
 
-6. Сохраняйте сущности короткими
+Точка — это та, которую вы используете для вызова методов в Java или C#. В PHP — это будет стрелка.
+
+В основном это правило гласит, что вы не должны вызывать методы по цепочке. Однако, это не касается Текучего интерфейса (Fluent Interfaces), и в общем всего, что реализует паттерн цепочки методов (например, построитель запросов).
+
+Для других классов вы должны придерживаться этого правила. Это прямое следствие закона Деметры, который предписывает обращаться только к непосредственным друзьям и не обращаться к незнакомцам:
+
+The LawOfDemeter specifies a style guideline: "Only talk to your immediate friends." E.g. one never calls a method on an object you got from another call nor on a global object. This helps a lot later when you ReFactor the code.
+
+http://www.ccs.neu.edu/research/demeter/papers/law-of-demeter/oopsla88-law-of-demeter.pdf
+
+PeterVanRooijen posted the following description of the LawOfDemeter to Usenet:
+
+    You can play with yourself.
+    You can play with your own toys (but you can't take them apart),
+    You can play with toys that were given to you.
+    And you can play with toys you've made yourself. 
+
+6. Не используйте сокращения
 ----------
 
-#8 Никаких классов с более чем 2 атрибутами
+Правильный вопрос, зачем вам надо использовать сокращения?
+
+Вы можете ответить, что это потому, что вы пишите одно и то же имя снова и снова. И я отвечу, если этот метод используется много раз, то это похоже на дублирование кода.
+
+Вы можете сказать, что название метода слишком длинное в любом случае. Тогда я скажу вам, что возможно у этого класса слишком много обязанностей, и это плохо, потому что нарушает принцип единственной обязанности.
+
+Я часто говорю, что если вы не можете найти подходящее имя для класса или метода, значит что-то не так. Это правило я использую, когда следую разработке через название.
+
+Не сокращайте, точка. 
+
+
+7. Сохраняйте сущности короткими
+----------
+Класс не больше 50 строк и пакет не больше 10 файлов. Хорошо, это зависит от вас, но я думаю, вы можете увеличить это число с 50 до 150.
+
+Идея этого правила, что длинные файлы сложнее читать, сложнее понимать и сложнее поддерживать.
+
+8 Никаких классов с более чем 2 атрибутами
+----------
+Я думал, люди будут смеяться, когда я буду рассказывать об этом правиле, но этого не произошло. Это правило, возможно, наиболее сложное, но он способствует высокой связности, и лучшей инкапсуляции.
+
+Картинка стоит тысячи слов, поэтому вот вам объяснение этого правила на картинке. Обратите внимание, что это основано на третьем правиле. 
+
+Note that in thinking about how to do the decomposition, the opportunity to separate the
+concerns of a family name (used for many legal entity restrictions) could be separated from an
+essentially different kind of name. The GivenName object here contains a list of names, allowing
+the new model to absorb people with first, middle, and other given names. Frequently,
+decomposition of instance variables leads to an understanding of commonality of several related
+instance variables. Sometimes several related instance variables actually have a related life in a
+first class collection.
+
+Главный вопрос — почему два атрибута? Мой ответ — почему бы и нет? Не лучшее объяснение, но по моему, главная идея это разделить два типа классов, те которые обслуживают состояние одного атрибута, и те которые координируют две отдельные переменные. Два — это произвольный выбор, который заставляет сильно разделять ваши классы.
+
+9. Никаких геттеров, сеттеры и свойста
 ----------
 
-#9 Никаких геттеров, сеттеры и свойста
-----------
+Мое любимое правило. Оно может быть перефразировано, как указывай, а не спрашивай.
 
+Нормально использовать свойства, чтобы получать состояние объекта, до того пока вы не используете результат чтобы принимать решение за пределами объекта. Любые решения основанные полностью на состоянии одного объекта должны быть сделаны внутри самого объекта.
+
+Very very short summary: It is okay to use accessors to get the state of an object, as long as you don't use the result to make decisions outside the object. Any decisions based entirely upon the state of one object should be made 'inside' the object itself. 
+
+В коде выше getScore() используется для принятия решения. Вы решаете, как увеличить ваш счет (score), вместо того, чтобы оставить эту ответственность самому классу Game.
+
+Лучшее решение — это убрать геттеры и сеттеры и предоставить методы, которые имеют смысл. Помните, вы указываете классу что делать, а не спрашиваете его. Ниже, вы указываете классу обновить ваш счет, так как вы уничтожили ENEMY_DESTROYED_SCORE врагов.
+
+Это ответственно класса game как обновить счет.
+
+В этом случае, вы можете оставить getScore() так как вы захотите его вывести где-то в пользовательском интерфейсе, но помните, что сеттеры запрещены. 
 
 Еще раз
 ----------
 
+7 of these 9 rules are simply ways to visualize and implement the holy grail of object oriented
+programming – encapsulation of data. In addition, another drives the appropriate use of
+polymorphism [not using else and minimizing all conditional logic], and another is a naming
+strategy that encourages concise and straightforward naming standards – without inconsistently
+applied and hard to pronounce abbreviations. The entire thrust is to craft code that has no
+duplication in code or idea. Code which concisely expresses simple and elegant abstractions for
+the incidental complexity we deal with all day long.
 
 Если вам не нравятся эти правила — это нормально
 ----------
 Но верьте мне, когда я говорю, что они могут быть использованы в реальной жизни. Попробуйте их в свободное время, например для рефакторинга ваших открытых проектов. Я думаю, это просто вопрос практики. Некоторые правила просты в соблюдении и могут вам помочь.
+
 spend 20 hours and 1000 lines writing code that conforms 100% to these rules
